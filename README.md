@@ -25,7 +25,7 @@ A classic implementation of the timeless puzzle game, **Minesweeper**, built usi
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com
+    git clone https://github.com/raymondoyondi/Minesweeper.git
     ```
 2.  **Open in IDE:**
     Import the project into [IntelliJ IDEA](https://www.jetbrains.com) or [Android Studio](https://developer.android.com).
