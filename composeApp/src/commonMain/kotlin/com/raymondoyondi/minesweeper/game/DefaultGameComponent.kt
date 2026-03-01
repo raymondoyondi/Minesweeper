@@ -1,0 +1,80 @@
+package com.raymondoyondi.minesweeper.game
+
+import com.raymondoyondi.decompose.ComponentContext
+import com.raymondoyondi.decompose.value.Value
+import com.raymondoyondi.essenty.lifecycle.coroutines.coroutineScope
+import com.raymondoyondi.minesweeper.asValue
+import com.raymondoyondi.mvikotlin.core.instancekeeper.getStore
+import com.raymondoyondi.mvikotlin.core.store.StoreFactory
+import com.raymondoyondi.mvikotlin.extensions.coroutines.stateFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
+import kotlin.time.Duration.Companion.seconds
+
+@OptIn(ExperimentalCoroutinesApi::class)
+internal class DefaultGameComponent(
+    componentContext: ComponentContext,
+    storeFactory: StoreFactory,
+    settings: GameSettings,
+    mainCoroutineContext: CoroutineContext
+) : GameComponent, ComponentContext by componentContext {
+
+    private val scope = coroutineScope(context = mainCoroutineContext + SupervisorJob())
+
+    private val store =
+        instanceKeeper.getStore {
+            storeFactory.gameStore(
+                state = stateKeeper.consume(key = KEY_SAVED_STATE, strategy = GameState.serializer())
+                    ?: newGameState(width = settings.width, height = settings.height, maxMines = settings.maxMines),
+            )
+        }
+
+    override val state: Value<GameState> = store.asValue()
+
+    init {
+        stateKeeper.register(key = KEY_SAVED_STATE, strategy = GameState.serializer()) { store.state }
+        scope.launch {
+            store.stateFlow
+                .map { it.gameStatus == GameStatus.STARTED }
+                .distinctUntilChanged()
+                .collectLatest { isStarted ->
+                    if (isStarted) {
+                        while (true) {
+                            delay(1.seconds)
+                            store.accept(Intent.TickTimer)
+                        }
+                    }
+                }
+        }
+    }
+
+    override fun onCellTouchedPrimary(x: Int, y: Int) {
+        store.accept(Intent.PressCell(x = x, y = y))
+    }
+
+    override fun onCellPressedSecondary(x: Int, y: Int) {
+        store.accept(Intent.ToggleFlag(x = x, y = y))
+    }
+
+    override fun onCellTouchedTertiary(x: Int, y: Int) {
+        store.accept(Intent.PressCells(x = x, y = y))
+    }
+
+    override fun onCellReleased(x: Int, y: Int) {
+        store.accept(Intent.ReleaseCells(x = x, y = y))
+    }
+
+    override fun onRestartClicked() {
+        store.accept(Intent.Restart)
+    }
+
+    private companion object {
+        private const val KEY_SAVED_STATE = "saved_state"
+    }
+}
