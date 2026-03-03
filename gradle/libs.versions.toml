@@ -30,12 +30,12 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
-decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
-decompose-extensions-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
-mvikotlin = { group = "com.arkivanov.mvikotlin", name = "mvikotlin", version.ref = "mvikotlin" }
-mvikotlin-main = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-main", version.ref = "mvikotlin" }
-mvikotlin-timetravel = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-timetravel", version.ref = "mvikotlin" }
-mvikotlin-coroutines = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-extensions-coroutines", version.ref = "mvikotlin" }
+decompose = { group = "com.raymondoyondi.decompose", name = "decompose", version.ref = "decompose" }
+decompose-extensions-compose = { group = "com.raymondoyondi.decompose", name = "extensions-compose", version.ref = "decompose" }
+mvikotlin = { group = "com.raymondoyondi.mvikotlin", name = "mvikotlin", version.ref = "mvikotlin" }
+mvikotlin-main = { group = "com.raymondoyondi.mvikotlin", name = "mvikotlin-main", version.ref = "mvikotlin" }
+mvikotlin-timetravel = { group = "com.raymondoyondi.mvikotlin", name = "mvikotlin-timetravel", version.ref = "mvikotlin" }
+mvikotlin-coroutines = { group = "com.raymondoyondi.mvikotlin", name = "mvikotlin-extensions-coroutines", version.ref = "mvikotlin" }
 serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 essenty-lifecycle-coroutines = { group = "com.arkivanov.essenty", name = "lifecycle-coroutines", version.ref = "essenty" }
 coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "coroutines" }
