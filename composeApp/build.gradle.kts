@@ -61,7 +61,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.arkivanov.minesweeper"
+            packageName = "com.raymondoyondi.minesweeper"
             packageVersion = "1.0.0"
         }
     }
